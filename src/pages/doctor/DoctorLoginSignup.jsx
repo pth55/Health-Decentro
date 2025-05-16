@@ -78,7 +78,7 @@ export function DoctorLoginSignup({ showAuthModal, setShowAuthModal, walletAddre
                         password,
                         options: {
                             data: { phone: phone, role: "doctor" },
-                            emailRedirectTo: "http://localhost:5174/doctor/profile-setup",
+                            emailRedirectTo: "https://health-decentro.vercel.app/doctor/profile-setup",
                         },
                     });
 
