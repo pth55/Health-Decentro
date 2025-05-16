@@ -1,15 +1,15 @@
 import Web3 from "web3";
 import contractABI from "./ABI.ts"; // Update the path if necessary
-
+import type { Contract } from "web3-eth-contract";
 const contractAddress = import.meta.env.VITE_HEALTH_RECORD_CONTRACT_ADDRESS;
 
-let web3;
-let contract;
+let web3: Web3 | null = null;
+let contract: Contract | null = null;
 
 /**
  * Connects to the blockchain and initializes the contract.
  */
-export async function connectToBlockchain() {
+export async function connectToBlockchain(): Promise<void> {
   if (window.ethereum) {
     web3 = new Web3(window.ethereum);
     try {
@@ -29,7 +29,7 @@ export async function connectToBlockchain() {
 /**
  * Registers a patient by calling the smart contract's registerPatient function.
  */
-export async function registerPatient() {
+export async function registerPatient(): Promise<void> {
   // Ensure web3 and contract are initialized
   if (!web3 || !contract) {
     await connectToBlockchain();
@@ -62,7 +62,7 @@ export async function registerDoctor() {
 }
 
 // Admin Registration (Admin Only)
-export async function adminRegisterPatient(patientAddress) {
+export async function adminRegisterPatient(patientAddress: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     await contract.methods.adminRegisterPatient(patientAddress).send({
@@ -75,7 +75,7 @@ export async function adminRegisterPatient(patientAddress) {
   }
 }
 
-export async function adminRegisterDoctor(doctorAddress) {
+export async function adminRegisterDoctor(doctorAddress: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     await contract.methods.adminRegisterDoctor(doctorAddress).send({
@@ -92,7 +92,12 @@ export async function adminRegisterDoctor(doctorAddress) {
 // File Management Functions
 // ============================
 
-export async function addFile(name, cid, category, description) {
+export async function addFile(
+  name: string,
+  cid: string,
+  category: string,
+  description: string
+) {
   const accounts = await web3.eth.getAccounts();
   try {
     await contract.methods
@@ -110,10 +115,10 @@ export async function addFile(name, cid, category, description) {
 // ============================
 
 export async function addDailyReport(
-  bloodPressureSystolic,
-  bloodPressureDiastolic,
-  bloodSugar,
-  heartRate
+  bloodPressureSystolic: number,
+  bloodPressureDiastolic: number,
+  bloodSugar: number,
+  heartRate: number
 ) {
   const accounts = await web3.eth.getAccounts();
   try {
@@ -166,7 +171,7 @@ export async function revokeAccess(doctorAddress: string) {
 // Data Retrieval Functions
 // ============================
 
-export async function getFiles(patientAddress) {
+export async function getFiles(patientAddress: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     const files = await contract.methods
@@ -180,7 +185,7 @@ export async function getFiles(patientAddress) {
   }
 }
 
-export async function getDailyReports(patientAddress) {
+export async function getDailyReports(patientAddress: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     const reports = await contract.methods
@@ -194,7 +199,10 @@ export async function getDailyReports(patientAddress) {
   }
 }
 
-export async function getDoctorAccess(patientAddress, doctorAddress) {
+export async function getDoctorAccess(
+  patientAddress: string,
+  doctorAddress: string
+) {
   const accounts = await web3.eth.getAccounts();
   try {
     const access = await contract.methods
@@ -208,7 +216,7 @@ export async function getDoctorAccess(patientAddress, doctorAddress) {
   }
 }
 
-export async function getPatientDoctors(patientAddress) {
+export async function getPatientDoctors(patientAddress: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     const doctors = await contract.methods
@@ -222,7 +230,7 @@ export async function getPatientDoctors(patientAddress) {
   }
 }
 
-export async function getDoctorPatients(doctorAddress) {
+export async function getDoctorPatients(doctorAddress: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     const patients = await contract.methods
@@ -241,7 +249,7 @@ export async function getDoctorPatients(doctorAddress) {
  * @param {string} address - Ethereum address to check.
  * @returns {Promise<boolean>} - True if the address belongs to a patient.
  */
-export async function isPatient(address) {
+export async function isPatient(address: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     const result = await contract.methods.isPatient(address).call({
@@ -260,7 +268,7 @@ export async function isPatient(address) {
  * @param {string} address - Ethereum address to check.
  * @returns {Promise<boolean>} - True if the address belongs to a doctor.
  */
-export async function isDoctor(address) {
+export async function isDoctor(address: string) {
   const accounts = await web3.eth.getAccounts();
   try {
     const result = await contract.methods.isDoctor(address).call({

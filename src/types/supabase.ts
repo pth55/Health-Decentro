@@ -117,4 +117,15 @@ export interface Doctor {
   updated_at: string; // Timestamp
 }
 
-export const;
+export const DoctorSchema = {
+  id: "string",
+  name: "string",
+  qualification: "string",
+  specialization: "string",
+  phone: "string",
+  aadhar: "string",
+  email: "string",
+  eth: "string",
+  created_at: "string",
+  updated_at: "string",
+};

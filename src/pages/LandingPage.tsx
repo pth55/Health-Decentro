@@ -5,7 +5,6 @@ import {
   Heart,
   Shield,
   FileText,
-  X,
   Activity,
   Users,
   Lock,

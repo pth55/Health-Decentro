@@ -3,7 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Heart, LogOut, Menu, X } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 
-export function Navbar({ walletAddress: propWalletAddress }) {
+export function Navbar({
+  walletAddress: propWalletAddress,
+}: {
+  walletAddress?: string;
+}) {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // State to hold the currently connected wallet address
@@ -17,16 +21,18 @@ export function Navbar({ walletAddress: propWalletAddress }) {
     if (propWalletAddress) {
       setWalletAddress(propWalletAddress);
     } else if (typeof window !== "undefined" && window.ethereum) {
-      window.ethereum.request({ method: "eth_accounts" }).then((accounts) => {
-        setWalletAddress(accounts[0] || "");
-      });
+      window.ethereum
+        .request({ method: "eth_accounts" })
+        .then((accounts: string[]) => {
+          setWalletAddress(accounts[0] || "");
+        });
     }
   }, [propWalletAddress]);
 
   // Listen for account changes in MetaMask so we update the wallet address dynamically.
   useEffect(() => {
     if (window.ethereum) {
-      const handleAccountsChanged = (accounts) => {
+      const handleAccountsChanged = (accounts: string[]) => {
         setWalletAddress(accounts[0] || "");
       };
       window.ethereum.on("accountsChanged", handleAccountsChanged);
