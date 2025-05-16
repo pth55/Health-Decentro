@@ -231,7 +231,7 @@ export function Navbar({
 
       {/* Blocking modal overlay for wallet mismatch */}
       {!loadingEth && walletAddress && !walletMatches && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-70">
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/70">
           <div className="bg-white p-8 rounded-md text-center mx-4 max-w-md w-full">
             {/* Animated icon/GIF – replace the src URL with your preferred animated GIF */}
             <img
