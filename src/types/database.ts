@@ -18,18 +18,18 @@ export interface Patient {
 }
 
 // Doctor interface matching the doctors table schema
-export interface Doctor {
-  id: string;
-  name: string;
-  qualification: string;
-  specialization?: string; // Optional
-  phone: string;
-  aadhar: string; // Optional
-  email: string;
-  eth: string; // Optional Ethereum address
-  created_at: string; // Timestamp
-  updated_at: string; // Timestamp
-}
+// export interface Doctor {
+//   id: string;
+//   name: string;
+//   qualification: string;
+//   specialization?: string; // Optional
+//   phone: string;
+//   aadhar: string; // Optional
+//   email: string;
+//   eth: string; // Optional Ethereum address
+//   created_at: string; // Timestamp
+//   updated_at: string; // Timestamp
+// }
 
 export interface File {
   name: string;
